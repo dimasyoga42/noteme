@@ -1,52 +1,58 @@
 name: Auto commit
 
 on:
-
   push:
     branches:
       - master
       
   schedule:
-  - cron: "20 * * 10 *" 
+    - cron: "20 * * 10 *"  # Setiap jam 20 menit di hari apapun pada bulan Oktober
+
+permissions:
+  contents: write  # Pastikan token memiliki hak untuk menulis konten
+
 jobs:
   auto_commit:
     runs-on: ubuntu-latest
     steps:
       - name: DEBUG 
-        run: echo "::debug::Ref = ${{github.ref}}"
-      - uses: actions/checkout@v3      
+        run: echo "::debug::Ref = ${{ github.ref }}"
+
+      - name: Checkout code
+        uses: actions/checkout@v3      
         with:
-         persist-credentials: false
-         fetch-depth: 0
+          persist-credentials: false  # Hindari konflik kredensial
+          fetch-depth: 0  # Ambil riwayat lengkap
 
       - name: Modify last update
         run: |
-          d=`date '+%Y-%m-%dT%H:%M:%SZ'`
-          echo $d > LAST_UPDATED
-          
+          d=$(date '+%Y-%m-%dT%H:%M:%SZ')
+          echo "$d" > LAST_UPDATED
+
+      - name: Configure Git
+        run: |
+          git config --local user.email "dimasyoga9090@gmail.com"
+          git config --local user.name "dimasyoga42"
+
       - name: Commit changes
         run: |
-          git config --local user.email "dimasyoga9090gmail.com"
-          git config --local user.name "dimasyoga42"
-          git add *
+          git add LAST_UPDATED
           
-          arr[0]="chore(bot): 😂 auto commit"
-          arr[1]="chore(bot): 😱 auto commit"
-          arr[2]="chore(bot): 👿 auto commit"
-          arr[3]="chore(bot): 💩 auto commit"
-          arr[4]="chore(bot): 🙏 auto commit"
-          arr[5]="chore(bot): 🙈 auto commit"
-          arr[6]="chore(bot): 🐐 auto commit"
-          arr[7]="chore(bot): 🤖 auto commit"
-          arr[8]="chore(bot): 🟩 auto commit"
-          arr[9]="chore(bot): 👻 auto commit"
-          
-          rand=$[$RANDOM % ${#arr[@]}]
-          
+          arr=("chore(bot): 😂 auto commit" 
+               "chore(bot): 😱 auto commit" 
+               "chore(bot): 👿 auto commit"
+               "chore(bot): 💩 auto commit"
+               "chore(bot): 🙏 auto commit"
+               "chore(bot): 🙈 auto commit"
+               "chore(bot): 🐐 auto commit"
+               "chore(bot): 🤖 auto commit"
+               "chore(bot): 🟩 auto commit"
+               "chore(bot): 👻 auto commit")
+
+          rand=$((RANDOM % ${#arr[@]}))
           git commit -m "${arr[$rand]}"
-          
-      - name: GitHub Push
+
+      - name: Push changes to GitHub
         uses: ad-m/github-push-action@v0.6.0
         with:
-          directory: "."
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}  # Pastikan GITHUB_TOKEN digunakan dengan benar
