@@ -31,8 +31,8 @@ jobs:
 
       - name: Configure Git
         run: |
-          git config --local user.email "dimasyoga9090@gmail.com"
-          git config --local user.name "dimasyoga42"
+          git config --global user.email "dimasyoga9090@gmail.com"
+          git config --global user.name "dimasyoga42"
 
       - name: Commit changes
         run: |
