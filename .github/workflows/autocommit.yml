@@ -3,7 +3,7 @@ name: Auto commit
 on:
   push:
     branches:
-      - master
+      - main
       
   schedule:
     - cron: "10 * * 10 *"  # Setiap jam 20 menit di hari apapun pada bulan Oktober
