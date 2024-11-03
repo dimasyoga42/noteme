@@ -6,7 +6,7 @@ on:
       -master
       
   schedule:
-    - cron: "10 * * 10 *"  # Setiap jam 20 menit di hari apapun pada bulan Oktober
+    - cron: "10 * * 11 *"  # Setiap jam 20 menit di hari apapun pada bulan Oktober
 
 permissions:
   contents: write  # Pastikan token memiliki hak untuk menulis konten
