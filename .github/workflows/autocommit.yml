@@ -38,16 +38,16 @@ jobs:
         run: |
           git add LAST_UPDATED
           
-          arr=("chore: 😂 update time" 
-               "chore: 😱 update time" 
-               "chore: 👿 update time"
-               "chore: 💩 update time"
-               "chore: 🙏 update time"
-               "chore: 🙈 update md"
-               "chore: 🐐 update md"
-               "chore: 🤖 update"
-               "chore: 🟩 update bos"
-               "chore: 👻 update bos")
+          arr=("chore:  update time" 
+               "chore:  update time" 
+               "chore:  update time"
+               "chore:  update time"
+               "chore:  update time"
+               "chore:  update md"
+               "chore:  update md"
+               "chore:  update"
+               "chore:  update bos"
+               "chore:  update bos")
 
           rand=$((RANDOM % ${#arr[@]}))
           git commit -m "${arr[$rand]}"
